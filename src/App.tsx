@@ -54,7 +54,7 @@ function App() {
                   element={
                     <ThemedLayoutV2
                       Header={() => <Header sticky />}
-                      Sider={() => <ThemedSiderV2 Title={() => "KyberSwap IAM Admin"} />}
+                      Sider={() => <ThemedSiderV2 Title={() => <>KyberSwap IAM Admin</>} />}
                     >
                       <Outlet />
                     </ThemedLayoutV2>
