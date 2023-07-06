@@ -65,7 +65,7 @@ function App() {
                     <Route path="create" element={<ClientCreate />} />
                     <Route path="edit/:id" element={<ClientEdit />} />
                   </Route>
-                  <Route path="*" element={<ErrorComponent />} />
+                  <Route path="*" element={<ClientList />} />
                 </Route>
               </Routes>
 
