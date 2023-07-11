@@ -19,11 +19,12 @@ import { Header } from './components/header'
 import { ColorModeContextProvider } from './contexts/color-mode'
 import { ClientList, ClientEdit, ClientCreate } from './pages/client'
 import { useState, useEffect, useCallback } from 'react'
-import KyberOauth2, { ClientConfig } from '@kybernetwork/oauth2'
+// import KyberOauth2, { ClientConfig } from '@kybernetwork/oauth2'
 import useUserInfo, { UserInfo } from './hooks/useUserInfo'
 import { whitelistedEmails } from './constants'
 import Swal from 'sweetalert2'
 import Login from './pages/login'
+import { MuiInferencer } from '@refinedev/inferencer/mui'
 
 const OAUTH2_CLIENT_ID = 'b1ec34e2-df95-449b-a02e-c52c6f4604ca'
 function ProtectedRoute({ children }: { children: JSX.Element }): JSX.Element | null {
@@ -34,57 +35,57 @@ function ProtectedRoute({ children }: { children: JSX.Element }): JSX.Element | 
   return children
 }
 
-const clientConfig: ClientConfig = {
-  clientId: OAUTH2_CLIENT_ID,
-  redirectUri: `${window.location.protocol}//${window.location.host}/login`,
-  mode: 'development',
-}
-KyberOauth2.initialize(clientConfig)
+// const clientConfig: ClientConfig = {
+//   clientId: OAUTH2_CLIENT_ID,
+//   redirectUri: `${window.location.protocol}//${window.location.host}/login`,
+//   mode: 'development',
+// }
+// KyberOauth2.initialize(clientConfig)
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false)
-  const navigate = useNavigate()
+  // const [isLogin, setIsLogin] = useState(false)
+  // const navigate = useNavigate()
 
-  const signOut = () => {
-    window.localStorage.removeItem('user')
-    KyberOauth2.logout()
-  }
+  // const signOut = () => {
+  //   window.localStorage.removeItem('user')
+  //   KyberOauth2.logout()
+  // }
 
-  const userInfo = useUserInfo()
-  const [checkingSession, setCheckingSession] = useState(!!userInfo)
+  // const userInfo = useUserInfo()
+  // const [checkingSession, setCheckingSession] = useState(!!userInfo)
 
-  const signIn = () => {
-    KyberOauth2.authenticate()
-  }
+  // const signIn = () => {
+  //   KyberOauth2.authenticate()
+  // }
 
-  const validateUserInfo = useCallback(async (user: UserInfo) => {
-    const { email = '' } = user
-    if (email?.includes('@kyber.network') || whitelistedEmails.includes(email ?? '')) {
-      window.localStorage.setItem('user', JSON.stringify(user))
-      if (window.location.pathname.startsWith('/login') || window.location.pathname === '/') {
-        navigate('/clients')
-      }
-      setIsLogin(true)
-    } else {
-      await Swal.fire('Error', 'Your account is not whitelisted', 'error')
-      signOut()
-    }
-  }, [])
+  // const validateUserInfo = useCallback(async (user: UserInfo) => {
+  //   const { email = '' } = user
+  //   if (email?.includes('@kyber.network') || whitelistedEmails.includes(email ?? '')) {
+  //     window.localStorage.setItem('user', JSON.stringify(user))
+  //     if (window.location.pathname.startsWith('/login') || window.location.pathname === '/') {
+  //       navigate('/clients')
+  //     }
+  //     setIsLogin(true)
+  //   } else {
+  //     await Swal.fire('Error', 'Your account is not whitelisted', 'error')
+  //     signOut()
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    const fn = async () => {
-      try {
-        const { userInfo } = await KyberOauth2.getSession()
-        validateUserInfo(userInfo)
-      } catch (err) {
-        window.localStorage.removeItem('user')
-        setCheckingSession(false)
-      }
-    }
-    fn()
-  }, [])
+  // useEffect(() => {
+  //   const fn = async () => {
+  //     try {
+  //       const { userInfo } = await KyberOauth2.getSession()
+  //       validateUserInfo(userInfo)
+  //     } catch (err) {
+  //       window.localStorage.removeItem('user')
+  //       setCheckingSession(false)
+  //     }
+  //   }
+  //   fn()
+  // }, [])
 
-  if (!isLogin) return <Login onClickLogin={signIn} loading={checkingSession} />
+  // if (!isLogin) return <Login onClickLogin={signIn} loading={checkingSession} />
 
   return (
     <RefineKbarProvider>
